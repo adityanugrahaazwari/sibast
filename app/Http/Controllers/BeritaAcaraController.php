@@ -33,7 +33,11 @@ class BeritaAcaraController extends Controller
         }
 
         $request->validate([
+            'nomor' => 'nullable|string|max:255',
             'nama' => 'required|string|max:255',
+            'nama_ppk' => 'nullable|string|max:255',
+            'nama_pejabat_pengadaan' => 'nullable|string|max:255',
+            'informasi' => 'nullable|string',
             'file' => 'required|file|mimes:pdf,doc,docx,jpg,png|max:2048',
             'items' => 'required|array|min:1',
             'items.*.nama_barang' => 'required|string|max:255',
@@ -49,7 +53,11 @@ class BeritaAcaraController extends Controller
 
             $beritaAcara = BeritaAcara::create([
                 'user_id' => Auth::id(),
+                'nomor' => $request->nomor,
                 'nama' => $request->nama,
+                'nama_ppk' => $request->nama_ppk,
+                'nama_pejabat_pengadaan' => $request->nama_pejabat_pengadaan,
+                'informasi' => $request->informasi,
                 'file_path' => $path,
             ]);
 

@@ -11,7 +11,11 @@ class BeritaAcara extends Model
 
     protected $fillable = [
         'user_id',
+        'nomor',
         'nama',
+        'nama_ppk',
+        'nama_pejabat_pengadaan',
+        'informasi',
         'file_path',
     ];
 

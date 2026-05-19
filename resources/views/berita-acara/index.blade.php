@@ -16,8 +16,13 @@
             <div class="border dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition">
                 <div class="flex justify-between items-start mb-4">
                     <div>
-                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ $ba->nama }}</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center space-x-2">
+                            @if($ba->nomor)
+                                <span class="bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-indigo-200 dark:border-indigo-800">{{ $ba->nomor }}</span>
+                            @endif
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ $ba->nama }}</h3>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
                             {{ __('messages.by') }}: <span class="font-medium text-gray-700 dark:text-gray-300">{{ $ba->user->name }}</span> | 
                             {{ __('messages.upload_at') }}: {{ $ba->created_at->format('d/m/Y H:i') }}
                         </p>
@@ -38,7 +43,28 @@
                     </div>
                 </div>
 
-                <div class="bg-gray-50 dark:bg-gray-700/50 rounded-md p-3">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 text-sm bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg">
+                    @if($ba->nama_ppk)
+                    <div>
+                        <span class="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Pejabat Pembuat Komitmen</span>
+                        <span class="text-gray-800 dark:text-gray-200">{{ $ba->nama_ppk }}</span>
+                    </div>
+                    @endif
+                    @if($ba->nama_pejabat_pengadaan)
+                    <div>
+                        <span class="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Pejabat Pengadaan</span>
+                        <span class="text-gray-800 dark:text-gray-200">{{ $ba->nama_pejabat_pengadaan }}</span>
+                    </div>
+                    @endif
+                    @if($ba->informasi)
+                    <div class="md:col-span-2">
+                        <span class="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Informasi Tambahan</span>
+                        <p class="text-gray-800 dark:text-gray-200 mt-1 italic leading-relaxed">{{ $ba->informasi }}</p>
+                    </div>
+                    @endif
+                </div>
+
+                <div class="bg-white dark:bg-gray-800/50 border dark:border-gray-700 rounded-md p-3">
                     <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('messages.item_list') }}:</h4>
                     <table class="min-w-full text-sm">
                         <thead>

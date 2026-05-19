@@ -56,17 +56,17 @@
                     @auth
                         <div class="hidden md:flex items-center space-x-1">
                             <span class="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase border border-indigo-100 dark:border-indigo-800 mr-2">{{ Auth::user()->role }}</span>
-                            <a href="{{ route('dashboard') }}" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition">{{ __('messages.dashboard') }}</a>
-                            <a href="{{ route('berita-acara.index') }}" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition">{{ __('messages.bast') }}</a>
+                            <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30' : 'text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400' }} px-3 py-2 rounded-md text-sm font-medium transition">{{ __('messages.dashboard') }}</a>
+                            <a href="{{ route('berita-acara.index') }}" class="{{ request()->routeIs('berita-acara.*') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30' : 'text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400' }} px-3 py-2 rounded-md text-sm font-medium transition">{{ __('messages.bast') }}</a>
                             @if (Auth::user()->isAdmin())
-                                <a href="{{ route('users.index') }}" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition">{{ __('messages.users') }}</a>
+                                <a href="{{ route('users.index') }}" class="{{ request()->routeIs('users.*') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30' : 'text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400' }} px-3 py-2 rounded-md text-sm font-medium transition">{{ __('messages.users') }}</a>
                             @endif
                         </div>
                         
                         <div class="h-6 w-px bg-gray-200 dark:bg-gray-700 mx-2 hidden md:block"></div>
 
                         <div class="flex items-center space-x-3">
-                            <a href="{{ route('profile.edit') }}" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 p-1 rounded-full transition" title="{{ __('messages.profile') }}">
+                            <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.*') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30' : 'text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400' }} p-1 rounded-full transition" title="{{ __('messages.profile') }}">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                             </a>
                             <form action="{{ route('logout') }}" method="POST" class="inline">

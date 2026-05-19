@@ -20,7 +20,15 @@
     <form action="{{ route('berita-acara.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+                <label for="nomor" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nomor</label>
+                <input type="text" name="nomor" id="nomor" value="{{ old('nomor') }}" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
+                @error('nomor')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
             <div>
                 <label for="nama" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('messages.document_name') }}</label>
                 <input type="text" name="nama" id="nama" value="{{ old('nama') }}" required class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
@@ -30,6 +38,30 @@
             </div>
 
             <div>
+                <label for="nama_ppk" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nama Pejabat Pembuat Komitmen</label>
+                <input type="text" name="nama_ppk" id="nama_ppk" value="{{ old('nama_ppk') }}" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
+                @error('nama_ppk')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label for="nama_pejabat_pengadaan" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nama Pejabat Pengadaan</label>
+                <input type="text" name="nama_pejabat_pengadaan" id="nama_pejabat_pengadaan" value="{{ old('nama_pejabat_pengadaan') }}" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
+                @error('nama_pejabat_pengadaan')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="md:col-span-2">
+                <label for="informasi" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Informasi</label>
+                <textarea name="informasi" id="informasi" rows="3" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">{{ old('informasi') }}</textarea>
+                @error('informasi')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="md:col-span-2">
                 <label for="file" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('messages.file_hint') }}</label>
                 <input type="file" name="file" id="file" required class="mt-1 block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 dark:file:bg-indigo-900/30 file:text-indigo-700 dark:file:text-indigo-300 hover:file:bg-indigo-100 dark:hover:file:bg-indigo-900/50">
                 @error('file')
