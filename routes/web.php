@@ -11,6 +11,13 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'id'])) {
+        session(['locale' => $locale]);
+    }
+    return back();
+})->name('lang.switch');
+
 // Guest Routes
 Route::middleware('guest')->group(function () {
     // Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
