@@ -38,6 +38,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/berita-acara', [\App\Http\Controllers\BeritaAcaraController::class, 'index'])->name('berita-acara.index');
     Route::get('/berita-acara/create', [\App\Http\Controllers\BeritaAcaraController::class, 'create'])->name('berita-acara.create');
     Route::post('/berita-acara', [\App\Http\Controllers\BeritaAcaraController::class, 'store'])->name('berita-acara.store');
+    Route::get('/berita-acara/{beritaAcara}', [\App\Http\Controllers\BeritaAcaraController::class, 'show'])->name('berita-acara.show');
+    Route::get('/berita-acara/{beritaAcara}/edit', [\App\Http\Controllers\BeritaAcaraController::class, 'edit'])->name('berita-acara.edit');
+    Route::put('/berita-acara/{beritaAcara}', [\App\Http\Controllers\BeritaAcaraController::class, 'update'])->name('berita-acara.update');
     Route::delete('/berita-acara/{beritaAcara}', [\App\Http\Controllers\BeritaAcaraController::class, 'destroy'])->name('berita-acara.destroy');
 
     // User Management (Admin Only)

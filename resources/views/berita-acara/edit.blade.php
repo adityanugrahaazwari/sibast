@@ -8,7 +8,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
         </a>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('messages.create_bast_title') }}</h2>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Edit Berita Acara</h2>
     </div>
 
     @if($errors->has('error'))
@@ -17,13 +17,14 @@
         </div>
     @endif
 
-    <form action="{{ route('berita-acara.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('berita-acara.update', $beritaAcara) }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
                 <label for="nomor" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nomor</label>
-                <input type="text" name="nomor" id="nomor" value="{{ old('nomor') }}" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
+                <input type="text" name="nomor" id="nomor" value="{{ old('nomor', $beritaAcara->nomor) }}" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
                 @error('nomor')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -31,7 +32,7 @@
 
             <div>
                 <label for="nama" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('messages.document_name') }}</label>
-                <input type="text" name="nama" id="nama" value="{{ old('nama') }}" required class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
+                <input type="text" name="nama" id="nama" value="{{ old('nama', $beritaAcara->nama) }}" required class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
                 @error('nama')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -39,7 +40,7 @@
 
             <div>
                 <label for="nama_ppk" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nama Pejabat Pembuat Komitmen</label>
-                <input type="text" name="nama_ppk" id="nama_ppk" value="{{ old('nama_ppk') }}" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
+                <input type="text" name="nama_ppk" id="nama_ppk" value="{{ old('nama_ppk', $beritaAcara->nama_ppk) }}" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
                 @error('nama_ppk')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -47,7 +48,7 @@
 
             <div>
                 <label for="nama_pejabat_pengadaan" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nama Pejabat Pengadaan</label>
-                <input type="text" name="nama_pejabat_pengadaan" id="nama_pejabat_pengadaan" value="{{ old('nama_pejabat_pengadaan') }}" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
+                <input type="text" name="nama_pejabat_pengadaan" id="nama_pejabat_pengadaan" value="{{ old('nama_pejabat_pengadaan', $beritaAcara->nama_pejabat_pengadaan) }}" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
                 @error('nama_pejabat_pengadaan')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -55,15 +56,16 @@
 
             <div class="md:col-span-2">
                 <label for="informasi" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Informasi</label>
-                <textarea name="informasi" id="informasi" rows="3" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">{{ old('informasi') }}</textarea>
+                <textarea name="informasi" id="informasi" rows="3" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">{{ old('informasi', $beritaAcara->informasi) }}</textarea>
                 @error('informasi')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
             <div class="md:col-span-2">
-                <label for="file" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('messages.file_hint') }}</label>
-                <input type="file" name="file" id="file" required class="mt-1 block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 dark:file:bg-indigo-900/30 file:text-indigo-700 dark:file:text-indigo-300 hover:file:bg-indigo-100 dark:hover:file:bg-indigo-900/50">
+                <label for="file" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('messages.file_hint') }} (Kosongkan jika tidak ingin mengubah file)</label>
+                <input type="file" name="file" id="file" class="mt-1 block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 dark:file:bg-indigo-900/30 file:text-indigo-700 dark:file:text-indigo-300 hover:file:bg-indigo-100 dark:hover:file:bg-indigo-900/50">
+                <p class="mt-1 text-xs text-gray-500">File saat ini: <a href="{{ asset('storage/' . $beritaAcara->file_path) }}" target="_blank" class="text-indigo-600 underline">Lihat File</a></p>
                 @error('file')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -88,41 +90,22 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700" id="items-body">
-                        @if(old('items'))
-                            @foreach(old('items') as $index => $item)
-                                <tr class="item-row">
-                                    <td class="p-2">
-                                        <input type="text" name="items[{{ $index }}][nama_barang]" value="{{ $item['nama_barang'] ?? '' }}" required class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-1 border text-sm">
-                                    </td>
-                                    <td class="p-2">
-                                        <input type="number" name="items[{{ $index }}][jumlah]" value="{{ $item['jumlah'] ?? '' }}" required min="1" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-1 border text-sm">
-                                    </td>
-                                    <td class="p-2">
-                                        <input type="text" name="items[{{ $index }}][satuan]" value="{{ $item['satuan'] ?? '' }}" placeholder="Pcs/Unit" required class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-1 border text-sm">
-                                    </td>
-                                    <td class="p-2">
-                                        <input type="number" name="items[{{ $index }}][harga_satuan]" value="{{ $item['harga_satuan'] ?? '' }}" required min="0" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-1 border text-sm">
-                                    </td>
-                                    <td class="p-2 text-center">
-                                        <button type="button" class="text-red-500 hover:text-red-700 remove-item">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @else
+                        @php 
+                            $items = old('items', $beritaAcara->items->toArray()); 
+                        @endphp
+                        @foreach($items as $index => $item)
                             <tr class="item-row">
                                 <td class="p-2">
-                                    <input type="text" name="items[0][nama_barang]" required class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-1 border text-sm">
+                                    <input type="text" name="items[{{ $index }}][nama_barang]" value="{{ $item['nama_barang'] ?? '' }}" required class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-1 border text-sm">
                                 </td>
                                 <td class="p-2">
-                                    <input type="number" name="items[0][jumlah]" required min="1" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-1 border text-sm">
+                                    <input type="number" name="items[{{ $index }}][jumlah]" value="{{ $item['jumlah'] ?? '' }}" required min="1" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-1 border text-sm">
                                 </td>
                                 <td class="p-2">
-                                    <input type="text" name="items[0][satuan]" placeholder="Pcs/Unit" required class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-1 border text-sm">
+                                    <input type="text" name="items[{{ $index }}][satuan]" value="{{ $item['satuan'] ?? '' }}" placeholder="Pcs/Unit" required class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-1 border text-sm">
                                 </td>
                                 <td class="p-2">
-                                    <input type="number" name="items[0][harga_satuan]" required min="0" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-1 border text-sm">
+                                    <input type="number" name="items[{{ $index }}][harga_satuan]" value="{{ $item['harga_satuan'] ?? '' }}" required min="0" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-1 border text-sm">
                                 </td>
                                 <td class="p-2 text-center">
                                     <button type="button" class="text-red-500 hover:text-red-700 remove-item">
@@ -130,7 +113,7 @@
                                     </button>
                                 </td>
                             </tr>
-                        @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -139,7 +122,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="w-full bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 font-bold transition">{{ __('messages.save_bast') }}</button>
+        <button type="submit" class="w-full bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 font-bold transition">Update Berita Acara</button>
     </form>
 </div>
 
@@ -147,7 +130,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const body = document.getElementById('items-body');
         const addButton = document.getElementById('add-item');
-        let rowIdx = {{ (old('items') && count(old('items')) > 0) ? (max(array_keys(old('items'))) + 1) : 1 }};
+        let rowIdx = {{ count($items) > 0 ? (max(array_keys($items)) + 1) : 1 }};
 
         addButton.addEventListener('click', function() {
             const newRow = document.createElement('tr');

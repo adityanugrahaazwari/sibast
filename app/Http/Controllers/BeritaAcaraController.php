@@ -81,6 +81,82 @@ class BeritaAcaraController extends Controller
         }
     }
 
+    public function show(BeritaAcara $beritaAcara)
+    {
+        $beritaAcara->load('items', 'user');
+        return view('berita-acara.show', compact('beritaAcara'));
+    }
+
+    public function edit(BeritaAcara $beritaAcara)
+    {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Hanya Admin yang dapat mengubah Berita Acara.');
+        }
+        $beritaAcara->load('items');
+        return view('berita-acara.edit', compact('beritaAcara'));
+    }
+
+    public function update(Request $request, BeritaAcara $beritaAcara)
+    {
+        if (!Auth::user()->isAdmin()) {
+            abort(403);
+        }
+
+        $request->validate([
+            'nomor' => 'nullable|string|max:255',
+            'nama' => 'required|string|max:255',
+            'nama_ppk' => 'nullable|string|max:255',
+            'nama_pejabat_pengadaan' => 'nullable|string|max:255',
+            'informasi' => 'nullable|string',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:2048',
+            'items' => 'required|array|min:1',
+            'items.*.nama_barang' => 'required|string|max:255',
+            'items.*.jumlah' => 'required|numeric|min:1',
+            'items.*.satuan' => 'required|string|max:50',
+            'items.*.harga_satuan' => 'required|numeric|min:0',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $data = [
+                'nomor' => $request->nomor,
+                'nama' => $request->nama,
+                'nama_ppk' => $request->nama_ppk,
+                'nama_pejabat_pengadaan' => $request->nama_pejabat_pengadaan,
+                'informasi' => $request->informasi,
+            ];
+
+            if ($request->hasFile('file')) {
+                // Hapus file lama
+                Storage::disk('public')->delete($beritaAcara->file_path);
+                // Simpan file baru
+                $data['file_path'] = $request->file('file')->store('berita-acara', 'public');
+            }
+
+            $beritaAcara->update($data);
+
+            // Sync items: Hapus yang lama, buat yang baru
+            $beritaAcara->items()->delete();
+            foreach ($request->items as $item) {
+                BeritaAcaraItem::create([
+                    'berita_acara_id' => $beritaAcara->id,
+                    'nama_barang' => $item['nama_barang'],
+                    'jumlah' => $item['jumlah'],
+                    'satuan' => $item['satuan'],
+                    'harga_satuan' => $item['harga_satuan'],
+                ]);
+            }
+
+            DB::commit();
+
+            return redirect()->route('berita-acara.index')->with('success', 'Berita Acara berhasil diperbarui!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Gagal memperbarui data: ' . $e->getMessage()])->withInput();
+        }
+    }
+
     public function destroy(BeritaAcara $beritaAcara)
     {
         if (!Auth::user()->isAdmin()) {

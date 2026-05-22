@@ -28,10 +28,13 @@
                         </p>
                     </div>
                     <div class="flex space-x-2">
-                        <a href="{{ asset('storage/' . $ba->file_path) }}" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 text-sm font-medium border border-indigo-600 dark:border-indigo-500 px-3 py-1 rounded-md">
-                            {{ __('messages.view_file') }}
+                        <a href="{{ route('berita-acara.show', $ba) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 text-sm font-medium border border-indigo-600 dark:border-indigo-500 px-3 py-1 rounded-md">
+                            {{ __('messages.view_detail') ?? 'Detail' }}
                         </a>
                         @if (Auth::user()->isAdmin())
+                            <a href="{{ route('berita-acara.edit', $ba) }}" class="text-yellow-600 dark:text-yellow-400 hover:text-yellow-900 dark:hover:text-yellow-300 text-sm font-medium border border-yellow-600 dark:border-yellow-500 px-3 py-1 rounded-md">
+                                {{ __('messages.edit') }}
+                            </a>
                             <form action="{{ route('berita-acara.destroy', $ba) }}" method="POST" onsubmit="return confirm('{{ __('messages.confirm_delete_bast') }}')">
                                 @csrf
                                 @method('DELETE')
